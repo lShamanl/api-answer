@@ -1,7 +1,7 @@
 <?php
 
 
-namespace ApiAnswer\Application;
+namespace lShamanl\ApiAnswer;
 
 use Exception;
 
