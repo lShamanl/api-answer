@@ -5,28 +5,12 @@ namespace lShamanl\ApiAnswer;
 
 use Exception;
 
+/**
+ * Class ApiAnswer
+ * @package lShamanl\ApiAnswer
+ */
 class ApiAnswer
 {
-    /** Коды 1xx - информационные */
-    const CODE_100_CONTINUE = 100; // 100 - продолжай
-    const CODE_101_SWITCHING_PROTOCOLS = 101; // 101 - переключение протоколов
-    const CODE_102_PROCESSING = 102; // 102 - идёт обработка
-
-    /** Коды 2xx - успешно */
-    const CODE_200_OK = 200; // 200 - хорошо
-    const CODE_201_CREATED = 201; // 201 - создано
-    const CODE_202_ACCEPTED = 202; // 202 - принято
-    const CODE_203_NON_AUTHORITATIVE_INFO = 203; // 203 - информация не авторитетна
-    const CODE_204_NO_CONTENT = 204; // 204 - нет содержимого
-
-    /** Коды 4xx - ошибка клиента */
-    const CODE_400_BAD_REQUEST = 400; // 400 - плохой, неверный запрос
-    const CODE_401_UNAUTHORIZED = 401; // 401 - не авторизован (не представился)
-    const CODE_403_FORBIDDEN = 403; // 403 - запрещено (не уполномочен)
-    const CODE_418_I_AM_A_TEAPOT_ = 418; // 418 - "Я - чайник"
-
-    /** Коды 5xx - ошибка сервера */
-    const CODE_500_INTERNAL_SERVER_ERROR = 500; // 500 - внутренняя ошибка сервера
 
     /** @var bool */
     protected $ok;
@@ -195,7 +179,7 @@ class ApiAnswer
      * @param bool $isNeedSetResponseCode
      * @return string
      */
-    public static function responseOk($description = null, $code = ApiAnswer::CODE_200_OK, $isNeedSetResponseCode = false)
+    public static function responseOk($description = null, $code = StatusCode::HTTP_OK, $isNeedSetResponseCode = false)
     {
         $apiAnswer = (new self(true, $code));
         if (isset($description)) { $apiAnswer->setDescription($description); }
@@ -209,7 +193,7 @@ class ApiAnswer
      * @param bool $isNeedSetResponseCode
      * @return string
      */
-    public static function responseRejected($description = null, $code = ApiAnswer::CODE_400_BAD_REQUEST, $isNeedSetResponseCode = false)
+    public static function responseRejected($description = null, $code = StatusCode::HTTP_BAD_REQUEST, $isNeedSetResponseCode = false)
     {
         $apiAnswer = (new self(true, $code));
         if (isset($description)) { $apiAnswer->setDescription($description); }
