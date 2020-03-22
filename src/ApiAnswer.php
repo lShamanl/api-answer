@@ -3,8 +3,6 @@
 
 namespace lShamanl\ApiAnswer;
 
-use Exception;
-
 /**
  * Class ApiAnswer
  * @package lShamanl\ApiAnswer
@@ -133,7 +131,6 @@ class ApiAnswer
     {
         if (!isset($this->data[$fieldName])) {
             return null;
-//            throw new FieldNotSetException('This field is not set');
         }
 
         return $this->data[$fieldName];
@@ -174,89 +171,6 @@ class ApiAnswer
         ;
 
         return $apiAnswer;
-    }
-
-    /**
-     * @param string $description
-     * @param int $code
-     * @param bool $setResponseCode
-     * @return string
-     */
-    public static function responseOk($description = null, $code = StatusCode::HTTP_OK, $setResponseCode = false)
-    {
-        /** @var ApiAnswer $apiAnswer */
-        $apiAnswer = (new self(true, $code));
-        if (isset($description)) {
-            $apiAnswer->setDescription($description);
-        } else {
-            $apiAnswer->setDescription(StatusCode::getDescription($code));
-        }
-
-        if ($setResponseCode) { http_response_code($apiAnswer->getCode()); }
-
-        return $apiAnswer->toJson();
-    }
-
-    /**
-     * @param string $description
-     * @param int $code
-     * @param bool $setResponseCode
-     * @return string
-     */
-    public static function responseRejected($description = null, $code = StatusCode::HTTP_BAD_REQUEST, $setResponseCode = false)
-    {
-        /** @var ApiAnswer $apiAnswer */
-        $apiAnswer = (new self(false, $code));
-        if (isset($description)) {
-            $apiAnswer->setDescription($description);
-        } else {
-            $apiAnswer->setDescription(StatusCode::getDescription($code));
-        }
-
-        if ($setResponseCode) { http_response_code($apiAnswer->getCode()); }
-
-        return $apiAnswer->toJson();
-    }
-
-    /**
-     * @param Exception $exception
-     * @param bool $setResponseCode
-     * @return string
-     */
-    public static function responseException(Exception $exception, $setResponseCode = false)
-    {
-        /** @var ApiAnswer $apiAnswer */
-        $apiAnswer = (new self(false, $exception->getCode()));
-        if (!empty($message = $exception->getMessage())) {
-            $apiAnswer->setDescription($message);
-        } else {
-            $apiAnswer->setDescription(StatusCode::getDescription($exception->getCode()));
-        }
-
-        if ($setResponseCode) { http_response_code($apiAnswer->getCode()); }
-
-        return $apiAnswer->toJson();
-    }
-
-    /**
-     * @param null $description
-     * @param int $code
-     * @param bool $setResponseCode
-     * @return string
-     */
-    public static function responseError($description = null, $code = StatusCode::HTTP_INTERNAL_SERVER_ERROR, $setResponseCode = false)
-    {
-        /** @var ApiAnswer $apiAnswer */
-        $apiAnswer = (new self(false, $code));
-        if (isset($description)) {
-            $apiAnswer->setDescription($description);
-        } else {
-            $apiAnswer->setDescription(StatusCode::getDescription($code));
-        }
-
-        if ($setResponseCode) { http_response_code($apiAnswer->getCode()); }
-
-        return $apiAnswer->toJson();
     }
 
     /**
